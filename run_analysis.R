@@ -13,7 +13,7 @@ names(X_test) <- read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR
 datatest <- cbind(read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/test/subject_test.txt"),
                   read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/test/y_test.txt"),
                   X_test)
-names(datatest)[1:2] <- c("subject","exercise")
+names(datatest)[1:2] <- c("subject","activity")
 
 ## Merge Train Set Data into a dataframe. Same thing as above.
 
@@ -22,32 +22,32 @@ names(X_train) <- read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HA
 datatrain <- cbind(read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/train/subject_train.txt"),
                   read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/train/y_train.txt"),
                   X_train)
-names(datatrain)[1:2] <- c("subject","exercise")
+names(datatrain)[1:2] <- c("subject","activity")
 
 ## Combine Train and Test Sets by stacking their rows.
 ## Easy enough, since the datasets have the same variables.
 
 alldata <- rbind(datatrain,datatest)
 
-## Relabel Exercise variables
+## Relabel activity variables
 
-alldata$exercise[alldata$exercise==1] = "WALKING"
-alldata$exercise[alldata$exercise==2] = "WALKING_UPSTAIRS"
-alldata$exercise[alldata$exercise==3] = "WALKING_DOWNSTAIRS"
-alldata$exercise[alldata$exercise==4] = "SITTING"
-alldata$exercise[alldata$exercise==5] = "STANDING"
-alldata$exercise[alldata$exercise==6] = "LAYING"
+alldata$activity[alldata$activity==1] = "WALKING"
+alldata$activity[alldata$activity==2] = "WALKING_UPSTAIRS"
+alldata$activity[alldata$activity==3] = "WALKING_DOWNSTAIRS"
+alldata$activity[alldata$activity==4] = "SITTING"
+alldata$activity[alldata$activity==5] = "STANDING"
+alldata$activity[alldata$activity==6] = "LAYING"
 
 ## Extract data pertaining only to means and std deviations
 
-data_means_std <- alldata[,grep("subject|exercise|mean|std", names(alldata))]
+data_means_std <- alldata[,grep("subject|activity|mean|std", names(alldata))]
 
 ## Create new data frame with summary data only using "dplyr" package
 
 library(dplyr)
 data_tbl <- tbl_df(data_means_std) # creates a 'tbl' for use by dplyr commands
-by_subject_exercise <- group_by(data_tbl, subject, exercise) # groups data into categories by subject # and exercise 
-tidydata <- summarise_each(by_subject_exercise, funs(mean)) # puts the mean of each variable for each combo of subject # and exercise into a new 'tbl'
+by_subject_activity <- group_by(data_tbl, subject, activity) # groups data into categories by subject # and activity 
+tidydata <- summarise_each(by_subject_activity, funs(mean)) # puts the mean of each combo of subject # and activity into a new 'tbl'
 
-## Write Text File to save the tidydata we created! It has the means of each variable for every combination of subject # and exercise.
+## Write Text File with the tidydata
 write.table(tidydata, file = "/Users/Jeff/Desktop/tidydata.txt",row.name=FALSE)
