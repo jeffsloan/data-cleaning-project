@@ -3,24 +3,24 @@
 ## I do this to create stackable dataframes. Then, I stack them!
 ## Next, I pull out the data that has "mean" or "std" in the variable name.
 ## Finally, I create our "tidydata" set using the dplyr package. If you haven't checked out the dplyr package,
-## give a try through swirl! It saves so much headache.
+## give a try through swirl! It saves so much headache. I'll assume you set your wd appropriately.
 
 ## Merge Test Set Data into a dataframe, adding names to the variables,
-## assigning exercise and subject to each observation.
+## assigning exercise and subject to each observation. 
 
-X_test <- read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/test/X_test.txt")
-names(X_test) <- read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/features.txt")[,2]
-datatest <- cbind(read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/test/subject_test.txt"),
-                  read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/test/y_test.txt"),
+X_test <- read.table("./UCI HAR DATASET/test/X_test.txt")
+names(X_test) <- read.table("./UCI HAR DATASET/features.txt")[,2]
+datatest <- cbind(read.table("./UCI HAR DATASET/test/subject_test.txt"),
+                  read.table("./CleaningData/UCI HAR DATASET/test/y_test.txt"),
                   X_test)
 names(datatest)[1:2] <- c("subject","activity")
 
 ## Merge Train Set Data into a dataframe. Same thing as above.
 
-X_train <- read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/train/X_train.txt")
-names(X_train) <- read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/features.txt")[,2]
-datatrain <- cbind(read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/train/subject_train.txt"),
-                  read.table("/Users/Jeff/Desktop/Summer2014/CleaningData/UCI HAR DATASET/train/y_train.txt"),
+X_train <- read.table("./UCI HAR DATASET/train/X_train.txt")
+names(X_train) <- read.table("./UCI HAR DATASET/features.txt")[,2]
+datatrain <- cbind(read.table("./UCI HAR DATASET/train/subject_train.txt"),
+                  read.table("./UCI HAR DATASET/train/y_train.txt"),
                   X_train)
 names(datatrain)[1:2] <- c("subject","activity")
 
@@ -50,4 +50,4 @@ by_subject_activity <- group_by(data_tbl, subject, activity) # groups data into 
 tidydata <- summarise_each(by_subject_activity, funs(mean)) # puts the mean of each combo of subject # and activity into a new 'tbl'
 
 ## Write Text File with the tidydata
-write.table(tidydata, file = "/Users/Jeff/Desktop/tidydata.txt",row.name=FALSE)
+write.table(tidydata, file = "./tidydata.txt",row.name=FALSE)
