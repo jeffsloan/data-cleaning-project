@@ -72,5 +72,7 @@ Variables in my dataframe have the same names as within the raw data, though the
 e.g. "the mean of means" or "the mean of standard deviations" listed for every observation of Samsung movement data of each subject and exercise.
 
 Accelaration is measured typically: distance/time^2
+
 Standard deviation is measured in the units of the original data.
+
 Frequency is measured in Hz.
