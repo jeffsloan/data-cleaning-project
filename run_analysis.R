@@ -11,7 +11,7 @@
 X_test <- read.table("./UCI HAR DATASET/test/X_test.txt")
 names(X_test) <- read.table("./UCI HAR DATASET/features.txt")[,2]
 datatest <- cbind(read.table("./UCI HAR DATASET/test/subject_test.txt"),
-                  read.table("./CleaningData/UCI HAR DATASET/test/y_test.txt"),
+                  read.table("./UCI HAR DATASET/test/y_test.txt"),
                   X_test)
 names(datatest)[1:2] <- c("subject","activity")
 
